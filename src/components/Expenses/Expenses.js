@@ -14,36 +14,30 @@ const Expenses = (props) => {
     console.log(selectedYear);
   };
 
+  // To create a filter through year selected we need to created a filter in the props that we receive from Expenses.js (props.expenses)
+  // After, select the value that we want to filter (date) and then converted with built-in getFullYear and then toString
+  // to be then possible compare with the value saved in filteredYear(selectedYear) that is a string.
+  // After this, filterYearHandler function will be the one "mapped" and returning "ExpenseItem.js" component
+  const filterYearHandler = props.expenses.filter((expense) => {
+    return expense.date.getFullYear().toString() === filteredYear;
+  });
+
   return (
     <Card className="expenses">
       <ExpensesFilter
         selected={filteredYear}
         onSaveSelectedDate={savedSelectedDate}
       />
-      <ExpenseItem
-        //Parent-Child-Props
-        title={props.expenses[0].title}
-        amount={props.expenses[0].amount}
-        date={props.expenses[0].date}
-      />
-      <ExpenseItem
-        //Parent-Child-Props
-        title={props.expenses[1].title}
-        amount={props.expenses[1].amount}
-        date={props.expenses[1].date}
-      />
-      <ExpenseItem
-        //Parent-Child-Props
-        title={props.expenses[2].title}
-        amount={props.expenses[2].amount}
-        date={props.expenses[2].date}
-      />
-      <ExpenseItem
-        //Parent-Child-Props
-        title={props.expenses[3].title}
-        amount={props.expenses[3].amount}
-        date={props.expenses[3].date}
-      />
+      {filterYearHandler.map((item) => {
+        return (
+          <ExpenseItem
+            key={item.id}
+            title={item.title}
+            amount={item.amount}
+            date={item.date}
+          />
+        );
+      })}
     </Card>
   );
 };
