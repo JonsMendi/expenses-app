@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./ExpenseForm.css";
 
-const ExpenseForm = () => {
+const ExpenseForm = (props) => {
   // NOTE:
   // Instead of saving new inputs in different variables(as we define under), we could as well just save in one
   // creating a object inside f useState, like:
@@ -13,23 +13,23 @@ const ExpenseForm = () => {
   // Afterwords each function should have a different approach using 'prevState' as an argument
   // and returning each function with "return setTitle(...prevState, enteredTitle: event.target.value)"
 
-  const [enteredTitle, setTitle] = useState("");
-  const [enteredAmount, setAmount] = useState("");
-  const [enteredDate, setDate] = useState("");
+  const [enteredTitle, setEnteredTitle] = useState("");
+  const [enteredAmount, setEnteredAmount] = useState("");
+  const [enteredDate, setEnteredDate] = useState("");
 
   const titleChangeEvent = (event) => {
-    setTitle(event.target.value);
-    console.log(event);
+    setEnteredTitle(event.target.value);
+    // console.log(event);
   };
 
   const amountChangeEvent = (event) => {
-    setAmount(event.target.value);
-    console.log(event);
+    setEnteredAmount(event.target.value);
+    // console.log(event);
   };
 
   const dateChangeInput = (event) => {
-    setDate(event.target.value);
-    console.log(event);
+    setEnteredDate(event.target.value);
+    // console.log(event);
   };
 
   const submitEvent = (event) => {
@@ -42,8 +42,11 @@ const ExpenseForm = () => {
       amount: enteredAmount,
       date: new Date(enteredDate), //here we use 'new Date' to parse the value into Date format.
     };
-
-    console.log(expenseData);
+    //Child-Parents-Props
+    props.onSaveNewExpense(expenseData);
+    setEnteredTitle("");
+    setEnteredAmount("");
+    setEnteredDate("");
   };
 
   return (
@@ -52,7 +55,7 @@ const ExpenseForm = () => {
       <div className="new-expense__controls">
         <div className="new-expense__control">
           <label>Title</label>
-          <input type="text" onChange={titleChangeEvent} />
+          <input type="text" value={enteredTitle} onChange={titleChangeEvent} />
         </div>
         <div className="new-expense__control">
           <label>Amount</label>
@@ -60,6 +63,7 @@ const ExpenseForm = () => {
             type="number"
             min="0.01"
             step="0.01"
+            value={enteredAmount}
             onChange={amountChangeEvent}
           />
         </div>
@@ -70,6 +74,7 @@ const ExpenseForm = () => {
             type="date"
             min="2021-01-01"
             max="2023-12-31"
+            value={enteredDate}
             onChange={dateChangeInput}
           />
         </div>
