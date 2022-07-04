@@ -1,8 +1,19 @@
+import React, { useState } from "react";
 import Card from "../UI/Card";
 import ExpenseForm from "./ExpenseForm";
 import "./NewExpense.css";
 
 const NewExpense = (props) => {
+  const [addExpenses, setAddExpenses] = useState(false);
+  //Under to show the ExpensesForm on click.
+  const handleChange = () => {
+    return setAddExpenses(true);
+  };
+  //Under cancel the ExpensesForm on click.
+  const handleChangeCancel = () => {
+    return setAddExpenses(false);
+  };
+
   const saveNewExpense = (newEnteredExpense) => {
     const expenseData = {
       ...newEnteredExpense,
@@ -13,10 +24,14 @@ const NewExpense = (props) => {
 
   return (
     <Card className="new-expense">
-      <ExpenseForm
-        //Child-Parents-Props
-        onSaveNewExpense={saveNewExpense}
-      />
+      {!addExpenses && <button onClick={handleChange}>Add New Expense</button>}
+      {addExpenses && (
+        <ExpenseForm
+          //Child-Parents-Props
+          onSaveNewExpense={saveNewExpense}
+          onCancelEvent={handleChangeCancel}
+        />
+      )}
     </Card>
   );
 };

@@ -47,6 +47,8 @@ const ExpenseForm = (props) => {
     setEnteredTitle("");
     setEnteredAmount("");
     setEnteredDate("");
+    //Under uses the same function then the Cancel Button to change again the state to show "Add New Expense".
+    props.onCancelEvent();
   };
 
   return (
@@ -78,6 +80,11 @@ const ExpenseForm = (props) => {
             onChange={dateChangeInput}
           />
         </div>
+      </div>
+      <div className="new-expense__cancel">
+        <button type="submit" onClick={props.onCancelEvent}>
+          Cancel
+        </button>
       </div>
       <div className="new-expense__actions">
         <button type="submit">Add Expense</button>

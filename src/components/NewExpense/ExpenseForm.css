@@ -21,6 +21,10 @@
   max-width: 100%;
 }
 
+.new-expense__cancel {
+  text-align: right;
+}
+
 .new-expense__actions {
   text-align: right;
 }
